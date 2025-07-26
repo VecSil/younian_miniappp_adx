@@ -1,0 +1,453 @@
+/* miniprogram/pages/briefing/briefing.wxss */
+page {
+  background-color: #121212; /* 深邃的炭黑背景 */
+  color: #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  height: 100vh; /* 固定页面高度为视窗高度 */
+  overflow: hidden; /* 防止页面级别滚动 */
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 30px 15px 0;
+  flex-shrink: 0; /* 防止头部在flex布局中被压缩 */
+}
+
+.title {
+  display: block;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.subtitle {
+  display: block;
+  font-size: 15px;
+  color: #a0a0a0;
+  margin-top: 8px;
+}
+
+.classifications-container {
+  width: 100%;
+  flex: 1; /* 占据剩余的所有垂直空间 */
+  overflow-y: auto; /* 使其内容可以垂直滚动 */
+  padding: 0 15px 30px;
+  box-sizing: border-box;
+}
+
+.theme-card {
+  background: linear-gradient(145deg, #2a2a2a, #1e1e1e); /* 深灰渐变 */
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.theme-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  display: block;
+}
+
+.theme-keyword {
+  font-size: 13px;
+  color: #b0b0b0;
+  margin-top: 6px;
+  display: block;
+}
+
+.communities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 固定为两列布局 */
+  gap: 15px;
+}
+
+.community-card {
+  background: rgba(255, 255, 255, 0.05); /* 半透明背景 */
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background 0.3s ease;
+  overflow: hidden; /* 防止头像等内容溢出 */
+}
+
+.community-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.community-info {
+  margin-bottom: 20px;
+}
+
+.community-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fafafa;
+  display: block;
+}
+
+.community-desc {
+  font-size: 14px;
+  color: #c0c0c0;
+  margin-top: 8px;
+  line-height: 1.6;
+  min-height: 44px;
+}
+
+.members-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.members-avatars {
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* 隐藏溢出的头像，防止撑开布局 */
+}
+
+.avatar-wrapper {
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-left: -10px;
+  padding: 2px;
+  background-color: #2a2a2a;
+  transition: transform 0.2s ease;
+}
+
+.avatar-wrapper:first-child {
+  margin-left: 0;
+}
+
+.avatar-wrapper:hover {
+  transform: scale(1.1);
+}
+
+.avatar-wrapper.is-current-user {
+  background: linear-gradient(135deg, #00d4ff, #7b68ee);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.members-count {
+  font-size: 12px;
+  color: #d0d0d0;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.empty-community {
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 50px;
+  color: #a0a0a0;
+  font-size: 16px;
+}
+
+.theme-switcher {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.theme-tab {
+  flex: 1;
+  padding: 10px 5px;
+  text-align: center;
+  font-size: 14px;
+  color: #a0a0a0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.theme-tab.active {
+  color: #ffffff;
+  font-weight: bold;
+  background: linear-gradient(rgba(42, 42, 42, 1), rgba(30, 30, 30, 1)) padding-box,
+              linear-gradient(135deg, #00d4ff, #7b68ee) border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-tab-name {
+  display: block;
+}
+
+.theme-card-container {
+  /* position: relative;  移除不再需要的相对定位 */
+}
+
+/* ============ 社群详情弹窗样式 ============ */
+
+/* 弹窗遮罩 */
+.card-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 弹窗内容容器 */
+.card-preview-content {
+  background: #111;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.25);
+  position: relative;
+  width: 90vw;
+  max-width: 600rpx;
+  max-height: 85vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50rpx) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 关闭按钮 */
+.card-preview-close {
+  position: absolute;
+  top: 20rpx;
+  right: 30rpx;
+  font-size: 48rpx;
+  color: #fff;
+  z-index: 1001;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.card-preview-close:hover {
+  color: #ff6b6b;
+}
+
+/* 名片样式 */
+.business-card {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* 名片头部 */
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 40rpx 20rpx 40rpx;
+  flex-shrink: 0;
+}
+
+.card-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.card-basic-info {
+  flex: 1;
+}
+
+.card-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8rpx;
+}
+
+.card-position {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8rpx;
+}
+
+.card-organization {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 分割线 */
+.card-divider {
+  height: 2rpx;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  margin: 0 40rpx;
+  flex-shrink: 0;
+}
+
+/* 滚动区域 */
+.card-body-scroll {
+  max-height: 60vh;
+  min-height: 200rpx;
+  overflow-y: auto;
+  background: linear-gradient(rgba(17, 17, 17, 1) 0%, rgba(17, 17, 17, 0.9) 100%);
+}
+
+.card-body-scroll::-webkit-scrollbar {
+  width: 4rpx;
+}
+
+.card-body-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2rpx;
+}
+
+.card-body-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2rpx;
+}
+
+.card-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* 名片内容 */
+.card-body {
+  padding: 40rpx;
+}
+
+.card-intro {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30rpx;
+  line-height: 1.6;
+}
+
+.card-section-title {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  margin-top: 20rpx;
+}
+
+/* 社群成员展示样式 */
+.card-members {
+  margin-top: 20rpx;
+}
+
+.members-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin-top: 10rpx;
+  padding-bottom: 20rpx;
+}
+
+.member-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+  min-width: 100rpx;
+  cursor: pointer;
+}
+
+.member-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2rpx);
+}
+
+.member-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-bottom: 8rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.member-name {
+  font-size: 22rpx;
+  color: #ffffff;
+  text-align: center;
+  max-width: 80rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 滚动提示样式 */
+.scroll-hint {
+  margin-top: 30rpx;
+  text-align: center;
+  padding: 20rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.scroll-hint-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+}
+
+/* 增强社群卡片的点击效果 */
+.community-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.community-card:active {
+  transform: scale(0.98);
+}

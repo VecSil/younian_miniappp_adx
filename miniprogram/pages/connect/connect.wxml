@@ -1,0 +1,155 @@
+<!--connect.wxml-->
+<view class="container">
+  <!-- 页面顶部导航栏标题 -->
+  <view class="nav-bar">
+    <view class="nav-title">好友列表</view>
+  </view>
+
+  <!-- 用户背景图片 -->
+  <view class="theme-background" wx:if="{{userCards[currentTrackIndex].avatarUrl}}" style="background-image: url({{userCards[currentTrackIndex].avatarUrl}});"></view>
+  <!-- 背景虚化层 -->
+  <view class="background-blur"></view>
+  
+  <!-- 背景星星 -->
+  <block wx:for="{{stars}}" wx:key="id">
+    <view 
+      class="star" 
+      style="left: {{item.x}}rpx; top: {{item.y}}rpx; width: {{item.size}}rpx; height: {{item.size}}rpx; opacity: {{item.opacity}};"
+      data-id="{{item.id}}">
+    </view>
+  </block>
+  
+  <!-- 连接页面内容 -->
+  <view class="content">
+    <!-- 主题列表 -->
+    <scroll-view class="music-playlist" scroll-y="{{false}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+      <!-- 加载中提示 -->
+      <view class="loading-container" wx:if="{{isLoading}}">
+        <view class="loading-icon"></view>
+        <text class="loading-text">加载中...</text>
+      </view>
+      
+      <!-- 错误提示 -->
+      <view class="error-container" wx:elif="{{loadError}}">
+        <text class="error-text">{{loadError}}</text>
+        <view class="retry-btn" bindtap="initUserCards">重新加载</view>
+      </view>
+      
+      <!-- 空状态提示 -->
+      <view class="empty-container" wx:elif="{{userCards.length === 0}}">
+        <view class="empty-icon">👥</view>
+        <text class="empty-text">暂无用户数据</text>
+        <text class="empty-subtext">请等待其他用户填写问卷</text>
+      </view>
+      
+      <!-- 用户名片列表 -->
+      <view class="playlist-container" wx:else>
+        <!-- 顶部填充 -->
+        <view class="list-padding"></view>
+        <!-- 实现物理滚动效果的轨道 -->
+        <view class="track-wheel" style="transform: translateY({{scrollOffset}}rpx)">
+          <view class="track-item {{index === currentTrackIndex ? 'active' : ''}}" 
+                wx:for="{{userCards}}" 
+                wx:key="index"
+                style="opacity: {{1 - 0.12 * Math.abs(index - currentTrackIndex)}};"
+                data-index="{{index}}"
+                bindtap="onUserCardTap">
+            <!-- 大型专辑封面式头像 -->
+            <view class="album-cover-container">
+              <view class="album-cover-placeholder" wx:if="{{!item.avatarUrl}}" style="background-color: {{item.color || '#6366f1'}}">
+                <text>{{item.name ? item.name[0] : '?'}}</text>
+              </view>
+              <image class="album-cover" wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+            </view>
+            <view class="track-info">
+              <view class="track-title">{{item.name || '未知用户'}}</view>
+              <view class="track-artist">{{item.subtitle || item.theme || '用户名片'}}</view>
+              <!-- 用户标签作为特色 -->
+              <view class="track-tags" wx:if="{{item.details && item.details.features && item.details.features.length > 0}}">
+                <view class="tag" wx:for="{{item.details.features}}" wx:for-item="feature" wx:key="*this" wx:if="{{index < 2}}">
+                  {{feature}}
+                </view>
+                <view class="tag-more" wx:if="{{item.details.features.length > 2}}">+{{item.details.features.length - 2}}</view>
+              </view>
+              <!-- 显示标签数量和阈值 -->
+              <view class="user-stats">
+                <text class="stats-text">{{item.totalTags}}个标签 · 阈值{{item.threshold}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 底部填充 -->
+        <view class="list-padding"></view>
+      </view>
+    </scroll-view>
+    <!-- 用户详细信息弹窗 -->
+    <view class="user-detail-modal" wx:if="{{showUserDetailModal}}">
+      <view class="user-detail-content">
+        <view class="user-detail-close" bindtap="closeUserDetailModal">×</view>
+        <!-- 用户基本信息 -->
+        <view class="user-detail-header">
+          <image class="user-detail-avatar" src="{{selectedUserDetail.avatarUrl}}" mode="aspectFill"></image>
+          <view class="user-detail-info">
+            <view class="user-detail-name">{{selectedUserDetail.name}}</view>
+            <view class="user-detail-subtitle">UnionLink 数字身份</view>
+            <view class="user-detail-stats">{{selectedUserDetail.totalTags}}个标签 · 阈值{{selectedUserDetail.threshold}}</view>
+          </view>
+        </view>
+        <!-- 标签信息 -->
+        <view class="user-detail-tags">
+          <!-- 专业领域标签 -->
+          <view class="tag-section" wx:if="{{selectedUserDetail.professionalTags.length > 0}}">
+            <view class="tag-section-title">专业领域</view>
+            <view class="tag-list">
+              <view class="tag-item" wx:for="{{selectedUserDetail.professionalTags}}" wx:key="*this">{{item}}</view>
+            </view>
+          </view>
+          <!-- 兴趣爱好标签 -->
+          <view class="tag-section" wx:if="{{selectedUserDetail.interestTags.length > 0}}">
+            <view class="tag-section-title">兴趣爱好</view>
+            <view class="tag-list">
+              <view class="tag-item" wx:for="{{selectedUserDetail.interestTags}}" wx:key="*this">{{item}}</view>
+            </view>
+          </view>
+          <!-- 性格标签 -->
+          <view class="tag-section" wx:if="{{selectedUserDetail.personalityTags.length > 0}}">
+            <view class="tag-section-title">性格特征</view>
+            <view class="tag-list">
+              <view class="tag-item" wx:for="{{selectedUserDetail.personalityTags}}" wx:key="*this">{{item}}</view>
+            </view>
+          </view>
+          <!-- 彩蛋标签 -->
+          <view class="tag-section" wx:if="{{selectedUserDetail.quirkyTags.length > 0}}">
+            <view class="tag-section-title">个性彩蛋</view>
+            <view class="tag-list">
+              <view class="tag-item" wx:for="{{selectedUserDetail.quirkyTags}}" wx:key="*this">{{item}}</view>
+            </view>
+          </view>
+        </view>
+        <!-- 联系信息 -->
+        <view class="user-detail-contact" wx:if="{{selectedUserDetail.contactInfo}}">
+          <view class="contact-title">联系方式</view>
+          <view class="contact-info">{{selectedUserDetail.contactInfo}}</view>
+        </view>
+        <!-- 个性标签 -->
+        <view class="user-detail-personal" wx:if="{{selectedUserDetail.personalTagsText}}">
+          <view class="personal-title">个性标签</view>
+          <view class="personal-text">{{selectedUserDetail.personalTagsText}}</view>
+        </view>
+        <!-- 微信二维码 -->
+        <view class="user-detail-qrcode" wx:if="{{selectedUserDetail.qrCodeUrl}}">
+          <view class="qrcode-title">微信二维码</view>
+          <view class="qrcode-container">
+            <image class="qrcode-image" 
+                   src="{{selectedUserDetail.qrCodeUrl}}" 
+                   mode="aspectFit" 
+                   binderror="onQRCodeError"
+                   bindlongpress="onQRCodeLongPress"
+                   show-menu-by-longpress="true"></image>
+          </view>
+          <view class="qrcode-hint">长按二维码可直接添加好友</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

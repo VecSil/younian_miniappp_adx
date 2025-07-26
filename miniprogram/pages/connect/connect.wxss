@@ -1,0 +1,1661 @@
+/* miniprogram/pages/connect/connect.wxss */
+/**connect.wxss**/
+.container {
+  padding: 0;
+  font-size: 14px;
+  color: #fff; /* 文字颜色改为白色 */
+  position: relative;
+  height: 100vh;
+  background-color: #000; /* 背景改为黑色 */
+  overflow: hidden;
+}
+
+/* 主题背景图片 */
+.theme-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+}
+
+/* 背景虚化层调整为毛玻璃效果 */
+.background-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(40px) saturate(1.2);
+  -webkit-backdrop-filter: blur(40px) saturate(1.2);
+  background-color: rgba(0, 0, 0, 0.6); /* 半透明黑色 */
+  z-index: -1;
+}
+
+/* 页面顶部导航栏 */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88rpx;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding-top: env(safe-area-inset-top);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  padding-top: 88rpx; /* 为顶部导航栏留出空间 */
+}
+
+
+
+
+
+/* 连接文字块 - 融入背景 */
+.connection-text-block {
+  width: 230rpx;
+  height: 230rpx;
+  background-color: #000; /* 改为黑色背景 */
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+/* 连接文字 */
+.connection-number {
+  font-size: 100rpx;
+  font-weight: bold;
+  color: #fff; /* 改为白色 */
+  line-height: 1;
+  margin-bottom: 5rpx;
+}
+
+/* 连接标签 */
+.connection-label {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.6); /* 改为半透明白色 */
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.connection-label::before {
+  content: "连接";
+  font-size: 22rpx;
+  margin-right: 4rpx;
+}
+
+.connection-label::after {
+  content: "人";
+  font-size: 22rpx;
+  margin-left: 4rpx;
+}
+
+
+
+/* 便签部分 - 改为黑色背景 */
+.notes-container {
+  width: 100%;
+  background-color: #000; /* 改为黑色背景 */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 30rpx 30rpx 0 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  overflow: hidden;
+  transition: height 0.2s ease;
+  box-shadow: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+.notes-container.expanded {
+  background-color: #000; /* 改为黑色背景 */
+}
+
+.handle {
+  width: 80rpx;
+  height: 8rpx;
+  background-color: rgba(255, 255, 255, 0.3); /* 改为半透明白色 */
+  border-radius: 4rpx;
+  margin: 20rpx auto;
+}
+
+/* 卡片滚动区域 */
+.cards-scroll-view {
+  width: 100%;
+  height: calc(100% - 40rpx); /* 减去handle的高度和margin */
+}
+
+/* 卡片容器 - 流式布局 */
+.cards-container {
+  padding: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* 卡片项 */
+.card-item {
+  width: 44%;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border-radius: 16rpx;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+  background-color: #000; /* 改为黑色背景 */
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.card-item:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+/* 卡片头像区域 */
+.card-avatar-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.card-avatar-placeholder {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #000; /* 改为黑色背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+/* 卡片信息 */
+.card-info {
+  text-align: center;
+}
+
+.card-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+  color: #fff; /* 改为白色 */
+}
+
+.card-position {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6); /* 改为半透明白色 */
+  margin-bottom: 6rpx;
+}
+
+.card-company {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 卡片标签样式 */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 8rpx;
+}
+
+.tag {
+  font-size: 18rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 10rpx;
+  max-width: 120rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #000; /* 改为黑色背景 */
+  color: #fff; /* 改为白色 */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+.skill-tag, .field-tag {
+  background-color: #000; /* 改为黑色背景 */
+  color: #fff; /* 改为白色 */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+.tag-more {
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+  padding: 4rpx 0;
+}
+
+/* 用户统计信息 */
+.user-stats {
+  margin-top: 8rpx;
+}
+
+.stats-text {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+/* 用户详细信息弹窗 */
+.user-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-detail-content {
+  position: relative;
+  width: 90%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  background-color: #000;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-detail-close {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: 10;
+}
+
+/* 用户基本信息 */
+.user-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-detail-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-detail-info {
+  flex: 1;
+}
+
+.user-detail-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8rpx;
+}
+
+.user-detail-subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8rpx;
+}
+
+.user-detail-stats {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 标签区域 */
+.user-detail-tags {
+  margin-bottom: 30rpx;
+}
+
+.tag-section {
+  margin-bottom: 30rpx;
+}
+
+.tag-section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 16rpx;
+  padding-left: 8rpx;
+  border-left: 4rpx solid #00d4ff;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.tag-item {
+  padding: 8rpx 16rpx;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+/* 联系信息 */
+.user-detail-contact {
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.contact-info {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 个性标签 */
+.user-detail-personal {
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.personal-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.personal-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+/* 微信二维码 */
+.user-detail-qrcode {
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.qrcode-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 16rpx;
+  text-align: center;
+}
+
+.qrcode-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qrcode-image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 12rpx;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.qrcode-hint {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 16rpx;
+}
+
+
+
+/* 歌单式名片列表 - 更改为黑色背景 */
+.music-playlist {
+  width: 100%;
+  height: calc(100vh - 760rpx);
+  background-color: #000; /* 改为黑色背景 */
+  border-radius: 40rpx 40rpx 0 0;
+  box-shadow: none;
+  position: relative;
+  z-index: 5;
+  padding-top: 20rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+/* 歌单容器 - 改为滚轮效果 */
+.playlist-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* 确保不会出现滚动条 */
+}
+
+/* 新增滚动轨道样式 */
+.track-wheel {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: none; /* 移除过渡动画以提高性能 */
+  will-change: transform; /* 优化性能 */
+  transform: translateZ(0); /* 启用硬件加速 */
+}
+
+/* 列表顶部和底部填充 */
+.list-padding {
+  width: 100%;
+  height: 450rpx; /* 减少顶部填充高度，使选中区域往上移 */
+  flex-shrink: 0;
+}
+
+/* 添加顶部和底部渐变蒙版 - 调整为黑色渐变 */
+.music-playlist::before,
+.music-playlist::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.music-playlist::before {
+  top: 0;
+  height: 150rpx; 
+  background: linear-gradient(to bottom, #000, rgba(0, 0, 0, 0)); /* 黑色渐变 */
+  border-radius: 40rpx 40rpx 0 0;
+}
+
+.music-playlist::after {
+  bottom: 0;
+  height: 200rpx;
+  background: linear-gradient(to top, #000, rgba(0, 0, 0, 0)); /* 黑色渐变 */
+}
+
+/* 标签容器，确保正确显示 */
+.track-tags {
+  display: flex;
+  flex-wrap: nowrap; /* 防止换行 */
+  margin-top: 8rpx;
+  overflow: hidden; /* 隐藏溢出部分 */
+}
+
+/* 单个歌曲项 - 改为黑色风格 */
+.track-item {
+  width: 90%;
+  padding: 30rpx;
+  margin: 30rpx 0;
+  height: 230rpx;
+  border-radius: 24rpx;
+  background-color: #000; /* 改为黑色背景 */
+  transition: all 0.3s ease;
+  transform-origin: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 3;
+  box-sizing: border-box;
+  transform: translateZ(0);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+/* 聚焦的歌曲项 */
+.track-item.active {
+  background-color: #000; /* 保持黑色背景 */
+  transform: scale(1.08) translateZ(0);
+  box-shadow: none;
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.6); /* 边框更明显 */
+}
+
+/* 新增专辑封面容器 */
+.album-cover-container {
+  width: 180rpx; /* 略微减小封面尺寸，留更多文字空间 */
+  height: 180rpx; /* 略微减小封面尺寸，留更多文字空间 */
+  margin-right: 30rpx; /* 减少右边距 */
+  flex-shrink: 0; /* 防止被压缩 */
+  position: relative;
+  border-radius: 8rpx; /* 小圆角，保持方形感 */
+  overflow: hidden;
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.1); /* 添加阴影 */
+}
+
+/* 专辑封面 */
+.album-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 确保图片填满区域 */
+}
+
+/* 专辑封面占位符 */
+.album-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #000; /* 改为黑色背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 60rpx; /* 大字体 */
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+/* 歌曲信息区域 - 改进布局防止溢出 */
+.track-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  justify-content: center;
+  overflow: hidden; /* 防止内容溢出 */
+  max-width: calc(100% - 210rpx); /* 限制最大宽度 */
+}
+
+.track-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #fff; /* 改为白色 */
+  margin-bottom: 10rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.6); /* 改为半透明白色 */
+  margin-bottom: 8rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-position {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+  margin-bottom: 12rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 标签区域，类似歌曲风格标签 */
+.tag {
+  font-size: 24rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 30rpx;
+  margin-right: 12rpx;
+  margin-bottom: 6rpx;
+  background-color: #000; /* 改为黑色背景 */
+  color: #fff; /* 改为白色文字 */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 120rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+.tag-more {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+  margin-left: 4rpx;
+  align-self: center;
+  white-space: nowrap;
+}
+
+/* 修改加载状态颜色 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400rpx;
+}
+
+.loading-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.1);
+  border-top: 4rpx solid #ff7e5f;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: #ff5252;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.retry-btn {
+  padding: 16rpx 40rpx;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: white;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+}
+
+/* 空状态 */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+  color: #b3b3b3;
+}
+
+.empty-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff; /* 保持白色 */
+  margin-bottom: 20rpx;
+}
+
+.empty-subtext {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.4); /* 改为低透明度白色 */
+  text-align: center;
+  max-width: 80%;
+}
+
+/* 名片预览弹窗 */
+.card-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.card-preview-content {
+  width: 90%;
+  max-width: 650rpx;
+  position: relative;
+}
+
+.card-preview-close {
+  position: absolute;
+  top: 20rpx;
+  right: 30rpx;
+  font-size: 50rpx;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.card-preview-close:hover {
+  color: #ff6b6b;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.business-card {
+  background-color: #000; /* 改为黑色背景 */
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+.card-header {
+  padding: 40rpx;
+  display: flex;
+  align-items: center;
+  background-color: #000; /* 改为黑色背景 */
+}
+
+.card-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+  object-fit: cover; /* 确保图片填满区域 */
+  background-color: #000; /* 改为黑色背景 */
+}
+
+.card-basic-info {
+  flex: 1;
+}
+
+.card-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff; /* 改为白色 */
+  margin-bottom: 10rpx;
+}
+
+.card-position, .card-organization {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.6); /* 改为半透明白色 */
+  margin-bottom: 6rpx;
+}
+
+.card-divider {
+  height: 2rpx;
+  background-color: rgba(255, 255, 255, 0.3); /* 改为半透明白色 */
+}
+
+.card-body {
+  padding: 40rpx;
+}
+
+.card-intro {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7); /* 改为半透明白色 */
+  margin-bottom: 30rpx;
+  line-height: 1.6;
+}
+
+.card-section-title {
+  font-size: 28rpx;
+  color: #fff; /* 改为白色 */
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  margin-top: 20rpx;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-tag {
+  background-color: #000; /* 改为黑色背景 */
+  color: #fff; /* 改为白色 */
+  font-size: 24rpx;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 添加白色边框 */
+}
+
+.card-contact-value {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7); /* 改为半透明白色 */
+}
+
+/* 新增主题相关样式 */
+.card-concept-text {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20rpx;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.card-philosophy-text {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20rpx;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* 移除旧的唱片点击效果 */
+
+/* 星星样式 */
+.star {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 10rpx rgba(255, 255, 255, 0.8);
+  animation: twinkle 4s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.7; }
+}
+
+/* 配对用户展示区 */
+.pair-section {
+  width: 90%;
+  margin: 40rpx auto 0 auto;
+  background: rgba(0,0,0,0.7);
+  border-radius: 24rpx;
+  padding: 30rpx 0 20rpx 0;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pair-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 20rpx;
+  letter-spacing: 2rpx;
+}
+.pair-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40rpx;
+}
+.pair-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pair-user-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pair-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+  margin-bottom: 10rpx;
+  object-fit: cover;
+  background: #222;
+}
+
+.pair-tap-hint {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  background: transparent;
+  border: 2rpx solid;
+  border-radius: 20rpx;
+  padding: 4rpx 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: tap-bounce 2s infinite ease-in-out;
+  z-index: 10;
+  /* 添加发光效果 */
+  box-shadow: 0 0 8rpx currentColor, 0 0 16rpx currentColor;
+  filter: drop-shadow(0 0 6rpx currentColor);
+}
+
+.tap-text {
+  font-size: 18rpx;
+  font-weight: bold;
+}
+
+@keyframes tap-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 8rpx currentColor, 0 0 16rpx currentColor;
+  }
+  50% {
+    transform: translateY(-4rpx);
+    box-shadow: 0 0 12rpx currentColor, 0 0 24rpx currentColor, 0 0 36rpx currentColor;
+  }
+}
+
+.pair-nickname {
+  font-size: 26rpx;
+  color: #fff;
+  text-align: center;
+  max-width: 120rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 配对理由弹窗 */
+.pair-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pair-modal-mask {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1;
+}
+.pair-modal-content {
+  position: relative;
+  z-index: 2;
+  background: #111;
+  border-radius: 24rpx;
+  padding: 60rpx 40rpx 40rpx 40rpx;
+  min-width: 500rpx;
+  max-width: 90vw;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pair-modal-close {
+  position: absolute;
+  top: 20rpx;
+  right: 30rpx;
+  font-size: 48rpx;
+  color: #fff;
+  z-index: 3;
+  font-weight: bold;
+}
+.pair-modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+.pair-modal-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+  margin-bottom: 10rpx;
+  object-fit: cover;
+  background: #222;
+}
+.pair-modal-nickname {
+  font-size: 30rpx;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.pair-modal-reason-title {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  letter-spacing: 2rpx;
+}
+.pair-modal-reason {
+  font-size: 26rpx;
+  color: #fff;
+  line-height: 1.7;
+  text-align: center;
+  word-break: break-all;
+  max-width: 90vw;
+}
+
+/* 社群成员展示样式 */
+.card-members {
+  margin-top: 20rpx;
+}
+
+
+
+.member-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+  min-width: 100rpx;
+}
+
+.member-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2rpx);
+}
+
+.member-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-bottom: 8rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.member-name {
+  font-size: 22rpx;
+  color: #ffffff;
+  text-align: center;
+  max-width: 80rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 弹窗滚动区域样式 */
+.card-body-scroll {
+  max-height: 60vh; /* 最大高度为视窗高度的60% */
+  min-height: 200rpx; /* 最小高度 */
+  overflow-y: auto;
+  /* 添加渐变阴影提示滚动 */
+  background: linear-gradient(rgba(17, 17, 17, 1) 0%, rgba(17, 17, 17, 0.9) 100%);
+}
+
+/* 滚动容器的滚动条样式（在支持的平台上） */
+.card-body-scroll::-webkit-scrollbar {
+  width: 4rpx;
+}
+
+.card-body-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2rpx;
+}
+
+.card-body-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2rpx;
+}
+
+.card-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* 优化弹窗整体布局 */
+.card-preview-content {
+  max-height: 85vh; /* 弹窗整体最大高度 */
+  overflow: hidden; /* 防止弹窗超出屏幕 */
+}
+
+.business-card {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* 确保成员网格在滚动容器中正常显示 */
+.members-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin-top: 10rpx;
+  padding-bottom: 20rpx; /* 添加底部间距，避免最后一行被切断 */
+}
+
+/* 滚动提示样式 */
+.scroll-hint {
+  margin-top: 30rpx;
+  text-align: center;
+  padding: 20rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.scroll-hint-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+}
+
+/* ============ 简易名片列表样式 ============ */
+
+/* 简易名片列表容器 */
+.member-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  margin-top: 10rpx;
+}
+
+/* 单个简易名片横条 */
+.member-mini-card {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.member-mini-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(5rpx);
+}
+
+.member-mini-card:active {
+  transform: scale(0.98) translateX(5rpx);
+}
+
+/* 简易名片头像容器 */
+.member-avatar-container {
+  position: relative;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+/* 简易名片头像 */
+.member-mini-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+/* 社群成员"碰"提示 */
+.member-tap-hint {
+  position: absolute;
+  top: -6rpx;
+  right: -6rpx;
+  background: transparent;
+  border: 2rpx solid;
+  border-radius: 16rpx;
+  padding: 3rpx 6rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: member-tap-bounce 2.5s infinite ease-in-out;
+  z-index: 5;
+  /* 添加发光效果 */
+  box-shadow: 0 0 6rpx currentColor, 0 0 12rpx currentColor;
+  filter: drop-shadow(0 0 4rpx currentColor);
+}
+
+.member-tap-text {
+  font-size: 16rpx;
+  font-weight: bold;
+}
+
+@keyframes member-tap-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 6rpx currentColor, 0 0 12rpx currentColor;
+  }
+  50% {
+    transform: translateY(-3rpx) scale(1.05);
+    box-shadow: 0 0 10rpx currentColor, 0 0 20rpx currentColor, 0 0 30rpx currentColor;
+  }
+}
+
+/* 简易名片信息区 */
+.member-mini-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; /* 允许内容收缩 */
+}
+
+.member-mini-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-mini-status {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 简易名片箭头 */
+.member-mini-arrow {
+  font-size: 30rpx;
+  color: rgba(255, 255, 255, 0.4);
+  margin-left: 10rpx;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.member-mini-card:hover .member-mini-arrow {
+  color: rgba(255, 255, 255, 0.8);
+  transform: translateX(5rpx);
+}
+
+/* ============ 详细名片弹窗样式 ============ */
+
+/* 详细名片弹窗遮罩 */
+.detailed-card-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 详细名片遮罩点击区域 */
+.detailed-card-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* 详细名片内容容器 */
+.detailed-card-content {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 48rpx rgba(0, 0, 0, 0.4);
+  width: 85vw;
+  max-width: 550rpx;
+  max-height: 80vh;
+  overflow: hidden;
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50rpx) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 详细名片关闭按钮 */
+.detailed-card-close {
+  position: absolute;
+  top: 20rpx;
+  right: 30rpx;
+  font-size: 50rpx;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.detailed-card-close:hover {
+  color: #ff6b6b;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 详细名片头部 */
+.detailed-card-header {
+  display: flex;
+  align-items: center;
+  padding: 50rpx 40rpx 30rpx 40rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+/* 详细名片头像容器 */
+.detailed-card-avatar-container {
+  position: relative;
+  margin-right: 30rpx;
+}
+
+.detailed-card-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 3rpx solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.3);
+}
+
+/* 详细名片"碰"提示 */
+.detailed-card-tap-hint {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  background: transparent;
+  border: 2rpx solid;
+  border-radius: 22rpx;
+  padding: 6rpx 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: detailed-tap-bounce 2.2s infinite ease-in-out;
+  z-index: 15;
+  /* 添加发光效果 */
+  box-shadow: 0 0 10rpx currentColor, 0 0 20rpx currentColor;
+  filter: drop-shadow(0 0 8rpx currentColor);
+}
+
+.detailed-tap-text {
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+@keyframes detailed-tap-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 10rpx currentColor, 0 0 20rpx currentColor;
+  }
+  50% {
+    transform: translateY(-5rpx) scale(1.08);
+    box-shadow: 0 0 15rpx currentColor, 0 0 30rpx currentColor, 0 0 45rpx currentColor;
+  }
+}
+
+.detailed-card-info {
+  flex: 1;
+}
+
+.detailed-card-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 8rpx;
+}
+
+.detailed-card-status {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8rpx;
+}
+
+.detailed-card-theme {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 详细名片分割线 */
+.detailed-card-divider {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  margin: 0;
+}
+
+/* 详细名片滚动区域 */
+.detailed-card-body-scroll {
+  max-height: 50vh;
+  overflow-y: auto;
+  background: linear-gradient(rgba(26, 26, 26, 1) 0%, rgba(13, 13, 13, 0.95) 100%);
+}
+
+.detailed-card-body-scroll::-webkit-scrollbar {
+  width: 4rpx;
+}
+
+.detailed-card-body-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2rpx;
+}
+
+.detailed-card-body-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2rpx;
+}
+
+.detailed-card-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* 详细名片内容 */
+.detailed-card-body {
+  padding: 40rpx;
+}
+
+.card-section {
+  margin-bottom: 40rpx;
+}
+
+.card-section:last-child {
+  margin-bottom: 0;
+}
+
+.card-intro-text {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* 标签网格 */
+.card-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 15rpx;
+}
+
+.card-tag-item {
+  padding: 8rpx 16rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+/* AI匹配理由卡片 */
+.match-reason-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+  margin-top: 15rpx;
+  min-height: 120rpx;
+}
+
+.match-reason-content {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.match-reason-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 0;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 8rpx;
+  margin-bottom: 16rpx;
+}
+
+.loading-dots .dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: loading-pulse 1.4s infinite ease-in-out;
+}
+
+.loading-dots .dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots .dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-dots .dot:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes loading-pulse {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.match-reason-loading text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.match-reason-placeholder {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 20rpx 0;
+  font-style: italic;
+}
+
+/* 操作按钮 */
+.card-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+  padding-top: 30rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.action-btn {
+  flex: 1;
+  padding: 24rpx 0;
+  border-radius: 12rpx;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #ffffff;
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.action-btn.primary:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a42a0);
+  transform: translateY(-2rpx);
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transform: translateY(-2rpx);
+}

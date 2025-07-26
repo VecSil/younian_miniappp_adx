@@ -1,0 +1,104 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{hideThemeSwitcher ? (texts.titleWithTheme && targetTheme ? texts.titleWithTheme.replace('{theme}', targetTheme) : targetTheme + ' 社群广场') : texts.title}}</text>
+    <text class="subtitle">{{hideThemeSwitcher ? texts.subtitleWithTheme : texts.subtitle}}</text>
+  </view>
+
+  <view class="classifications-container">
+    <block wx:if="{{classifications.length > 0}}">
+      <!-- 主题切换器 (仅在非特定主题模式下显示) -->
+      <view class="theme-switcher" wx:if="{{!hideThemeSwitcher}}">
+        <view 
+          wx:for="{{classifications}}" 
+          wx:for-item="theme" 
+          wx:key="theme.theme" 
+          class="theme-tab {{currentThemeIndex === index ? 'active' : ''}}"
+          bindtap="switchTheme"
+          data-index="{{index}}">
+          <text class="theme-tab-name">{{theme.theme}}</text>
+        </view>
+      </view>
+
+      <!-- 当前选中的主题卡片 -->
+      <view class="theme-card-container">
+        <view wx:if="{{classifications[currentThemeIndex]}}" class="theme-card">
+          <view class="theme-header">
+            <text class="theme-title">{{classifications[currentThemeIndex].theme}}</text>
+            <text class="theme-keyword">{{classifications[currentThemeIndex].theme_keyword}}</text>
+          </view>
+          <view class="communities-grid">
+            <view wx:for="{{classifications[currentThemeIndex].communities}}" wx:for-item="community" wx:key="community.name" class="community-card" bindtap="showCommunityDetail" data-community-index="{{index}}">
+              <view class="community-info">
+                <text class="community-name">{{community.name}}</text>
+                <text class="community-desc">{{community.description}}</text>
+              </view>
+              <view class="members-container" wx:if="{{community.members.length > 0}}">
+                <view class="members-avatars">
+                  <view wx:for="{{community.displayMembers}}" wx:for-item="member" wx:key="member.openid" 
+                        class="avatar-wrapper {{member.openid === currentUserOpenId ? 'is-current-user' : ''}}">
+                    <image src="{{member.userInfo.avatarUrl}}" class="avatar"></image>
+                  </view>
+                </view>
+                <text class="members-count">{{texts.membersJoined && texts.membersJoined.replace ? texts.membersJoined.replace('{count}', community.members.length) : community.members.length + '人已加入'}}</text>
+              </view>
+              <view class="empty-community" wx:else>
+                <text>{{texts.noMembers}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="loading-container">
+        <text>{{texts.loading}}</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 社群成员详情弹窗 -->
+  <view class="card-preview-modal" wx:if="{{showCommunityPreview}}">
+    <view class="card-preview-content">
+      <view class="card-preview-close" bindtap="closeCommunityPreview">{{texts.modalClose}}</view>
+      <view class="business-card">
+        <!-- 固定头部区域 -->
+        <view class="card-header">
+          <image class="card-avatar" src="{{selectedCommunity.themeAvatar || '/assets/default-avatar.png'}}"></image>
+          <view class="card-basic-info">
+            <view class="card-name">{{selectedCommunity.name || texts.unknownCommunity}}</view>
+            <view class="card-position">{{selectedCommunity.themeName || texts.unknownTheme}}</view>
+            <view class="card-organization">{{texts.totalMembers ? texts.totalMembers.replace('{count}', selectedCommunity.totalMembers || 0) : '共' + (selectedCommunity.totalMembers || 0) + '人'}}</view>
+          </view>
+        </view>
+        <view class="card-divider"></view>
+        
+        <!-- 可滚动的内容区域 -->
+        <scroll-view class="card-body-scroll" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+          <view class="card-body">
+            <view class="card-intro">{{selectedCommunity.description || texts.noDescription}}</view>
+            
+            <!-- 社群成员列表 -->
+            <view class="card-members" wx:if="{{selectedCommunity.members && selectedCommunity.members.length > 0}}">
+              <view class="card-section-title">{{texts.sectionTitle}}</view>
+              <view class="members-grid">
+                <view 
+                  wx:for="{{selectedCommunity.members}}" 
+                  wx:key="openid"
+                  class="member-item"
+                  bindtap="viewUserProfile"
+                  data-openid="{{item.openid}}">
+                  <image class="member-avatar" src="{{item.userInfo.avatarUrl || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+                  <view class="member-name">{{item.userInfo.nickName || texts.anonymousUser}}</view>
+                </view>
+              </view>
+              <!-- 滚动提示 -->
+              <view class="scroll-hint" wx:if="{{selectedCommunity.members.length > 6}}">
+                <text class="scroll-hint-text">{{texts.scrollHint}}</text>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>
